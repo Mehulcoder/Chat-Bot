@@ -23,13 +23,28 @@ io.sockets.on('connection', function (socket) {
 
     //Disconnected
     socket.on('disconnect', function (data) {  
+        users.splice(users.indexOf(socket.username),1);
+        updateUsernames();
         connections.splice(connections.indexOf(socket)),
         console.log('Disconnected: %s sockets connected', connections.length);
     });
 
+    //When a new user is added
+    socket.on('new user', function (data, callback) {
+        callback(true);
+        socket.username = data;
+        users.push(socket.username);
+        updateUsernames();
+    });
+
     //When we get a message
     socket.on('send message', function (data) {  
-        console.log(data);
-        io.sockets.emit('new message', {msg: data});
+        // console.log(data);
+        io.sockets.emit('new message', {msg: data, user: socket.username});
     });
+
+    function updateUsernames() {
+        io.sockets.emit('get users', users);
+    }
+    
 });
