@@ -1,4 +1,4 @@
-# Chat-Bot
+# Chat-Room
 
 1) Make sure that you have npm and Node.js installed. If not, first install them on your local machine.
 2) After doing that, download and extract the files to a folder, say 'Chat-Bot'.
