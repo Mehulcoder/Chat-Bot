@@ -1,6 +1,6 @@
 $(function () {  
     var socket = io.connect();
-    
+
     var $messageForm = $('#messageForm');
     var $message = $('#message');
     var $chat = $('#chat'); 
@@ -9,5 +9,12 @@ $(function () {
         e.preventDefault();
         socket.emit('send message', $message.val());
         $message.val('');
+    });
+
+    socket.on('new message', function (data) {
+        $('#chat').append(
+        '<div class="card card-body bg-light">'+
+            data.msg
+        +'</div>');
     });
 });
